@@ -25,12 +25,30 @@ def pre_order(node):
     return traverse_node(node)
 
 # In-order traversal
-def in_order(node):
-    return []
+def in_order(node, data=[]):
+    def traverse_node(root):
+        if root is None:
+            return []
+
+        order = []
+
+        if root.left is not None:
+            order = traverse_node(root.left)
+
+        order = order + [root.data]
+
+        if root.right is not None:
+            order = order + traverse_node(root.right)
+
+        return order
+
+
+
+    return traverse_node(node)
 
 # Post-order traversal
 def post_order(node):
-    return []
+    ...
 
 def example_tests():
 
@@ -47,25 +65,27 @@ def example_tests():
         assert pre_order(b) == [b.data]
         assert pre_order(c) ==  [c.data, d.data]
 
-    pre_order_tests()
 
-    # @test.it('In-order Tests')
-    # def in_order_tests():
-    #     test.assert_equals(in_order(a), [b.data, a.data, d.data, c.data])
-    #     test.assert_equals(in_order(b), [b.data])
-    #     test.assert_equals(in_order(c), [d.data, c.data])
 
-    # @test.it('Post-order Tests')
-    # def post_order_tests():
-    #     test.assert_equals(post_order(a), [b.data, d.data, c.data, a.data])
-    #     test.assert_equals(post_order(b), [b.data])
-    #     test.assert_equals(post_order(c), [d.data, c.data])
+    def in_order_tests():
+        assert in_order(a) == [b.data, a.data, d.data, c.data], in_order(a)
+        assert in_order(b) == [b.data]
+        assert in_order(c) == [d.data, c.data]
+
+    def post_order_tests():
+        assert post_order(a) == [b.data, d.data, c.data, a.data], post_order(a)
+        assert post_order(a) == [b.data]
+        assert post_order(a) == [d.data, c.data]
 
     # @test.it('Empty Node Tests')
     # def None_tests():
     #     test.assert_equals(pre_order(None), [])
     #     test.assert_equals(in_order(None), [])
     #     test.assert_equals(post_order(None), [])
+
+    pre_order_tests()
+    in_order_tests()
+    # post_order_tests()
 
 if __name__ == '__main__':
     example_tests()
