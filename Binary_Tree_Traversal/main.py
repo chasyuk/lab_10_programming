@@ -48,7 +48,25 @@ def in_order(node, data=[]):
 
 # Post-order traversal
 def post_order(node):
-    ...
+    def traverse_node(root):
+        if root is None:
+            return []
+
+        order = []
+
+        if root.left is not None:
+            order = traverse_node(root.left)
+
+        if root.right is not None:
+            order = order + traverse_node(root.right)
+
+        order = order + [root.data]
+
+        return order
+
+
+
+    return traverse_node(node)
 
 def example_tests():
 
@@ -74,8 +92,8 @@ def example_tests():
 
     def post_order_tests():
         assert post_order(a) == [b.data, d.data, c.data, a.data], post_order(a)
-        assert post_order(a) == [b.data]
-        assert post_order(a) == [d.data, c.data]
+        assert post_order(b) == [b.data], post_order(a)
+        assert post_order(c) == [d.data, c.data]
 
     # @test.it('Empty Node Tests')
     # def None_tests():
@@ -85,7 +103,7 @@ def example_tests():
 
     pre_order_tests()
     in_order_tests()
-    # post_order_tests()
+    post_order_tests()
 
 if __name__ == '__main__':
     example_tests()
